@@ -3,7 +3,7 @@ let diskdb = [];
 let ssddb = [];
 let renderdb = [];
 let maxvalue = 25000;
-let minvalue = 120;
+let minvalue = 30;
 let keyword = "硬碟";
 let disktype = [];
 let vm = "";
@@ -16,13 +16,13 @@ const capacityGigaMetricPrefixRegex = /[g|G]/;
 const capacityTeraMetricPrefixRegex = /[t|T]/;
 
 function getData(catalog){
-    let url = corsproxyurl + "https://ecshweb.pchome.com.tw/search/v3.3/all/category/" + catalog + "/results?q=" + keyword + "&page=" + 1 + "&sort=sale/dc";
+    let url = corsproxyurl + "https%3A//ecshweb.pchome.com.tw/search/v3.3/all/category/" + catalog + "/results%3Fq%3D" + keyword + "%26page=" + 1 + "%26sort=sale/dc";
     console.log(url);
     $.getJSON(url , function (data) {
         let needPage = data['totalPage']
         console.log(needPage);
-        for(let page = 1; page != needPage ; page++){
-            $.getJSON(corsproxyurl +  "https://ecshweb.pchome.com.tw/search/v3.3/all/category/" + catalog + "/results?q=" + keyword + "&page=" + page + "&sort=sale/dc", function (data2) {
+        for(let page = 1; page <= needPage ; page++){
+            $.getJSON(corsproxyurl + "https%3A//ecshweb.pchome.com.tw/search/v3.3/all/category/" + catalog + "/results%3Fq%3D" + keyword + "%26page=" + page + "%26sort=sale/dc", function (data2) {
                 for (let it = 0 ; it != data2["prods"].length; it++){
                     if(catalog == hardDiskCatalogId){
                         let catalogdetail = "hdd-un"
@@ -121,10 +121,10 @@ function getData(catalog){
 function updateList(){
     console.log(vm.disktype)
     vm.renderdb = diskdb.concat(ssddb).filter(function (value){
-        if(value.capacity > maxvalue){
+        if(value.capacity > vm.maxvalue){
             return false;
         }
-        if(value.capacity < minvalue){
+        if(value.capacity < vm.minvalue){
             return false;
         }
         for(let it = 0 ; it != vm.disktype.length ; it++){
@@ -146,6 +146,7 @@ vm = Vue.createApp({
         }
     },
     created(){
+        //$.ajaxSetup({cache:false});
         getData(hardDiskCatalogId);
         getData(solidDiskCataLogId);
 
