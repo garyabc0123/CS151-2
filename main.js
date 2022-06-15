@@ -183,7 +183,9 @@ vm = Vue.createApp({
         updateList();
     },
     methods:{
-
+        toFix(val){
+            return val.toFixed(2);
+        }
     },
     watch:{
         minvalue: function (){
