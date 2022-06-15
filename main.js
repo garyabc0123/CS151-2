@@ -168,7 +168,8 @@ vm = Vue.createApp({
             maxprice: 99999,
             minprice: 300,
             disktype: [],
-            sorttype: "obverseOrderCP"
+            sorttype: "obverseOrderCP",
+            lastupdatetime: Date()
         }
     },
     created(){
