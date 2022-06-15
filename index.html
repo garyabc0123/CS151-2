@@ -3,109 +3,122 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <title>Pchome 硬碟價格比較器</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Pchome 硬碟篩選器</a>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-
-        </div>
-    </nav>
-
-    <div class="container mt-2">
-        <div class="row ">
-            <div class="col-3  border m-1">
-                <div class="list-group p-1">
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        3.5英吋硬碟
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        2.5英吋硬碟
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        2.5英吋固態硬碟
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        GEN3固態硬碟
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        GEN4固態硬碟
-                    </label>
-                </div>
-
-
-                <label  for="max-value" class="form-label">最大容量-{{max-value}}</label>
-                <input type="range" class="form-range" min="120" max="25000" step="10" id="max-value">
-                <label  for="min-value" class="form-label">最小容量-{{min-value}}</label>
-                <input type="range" class="form-range" min="120" max="25000" step="10" id="min-value">
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-            <div class="col-8 m-1">
-                <div class="row ">
-                    <img src=" https://placem.at/people?txt=價格空間xy圖&w=800&h=300" class="d-block w-100" alt="...">
-                </div>
-
-                <div class="row mt-2 mb-2">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-primary">按價格排序</button>
-                        <button type="button" class="btn btn-primary">按容量排序</button>
-                        <button type="button" class="btn btn-primary">按CP排序</button>
-                    </div>
-                </div>
-
-                <div class="row m-1 bg-white border rounded">
-                    <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="https://cs-c.ecimg.tw/items/DRAB2EA9009JFET/000001_1642557795.jpg"></div>
-                    <div class="col-md-6 mt-1">
-                        <h5>Seagate【BarraCuda】2TB 3.5吋桌上型硬碟(ST2000DM008)</h5>
-                        <p>Seagate【BarraCuda】2TB 3.5吋桌上型硬碟(ST2000DM008) ◆容量：2tb ◆sata 6gb s ◆7200轉速 ◆256mb緩衝記憶體 ◆mtc多層快取技術，資料流讀寫最佳化 ◆8*5日常工作負載</p>
-                    </div>
-                    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                        <div class="d-flex flex-row align-items-center">
-                            <h4 class="mr-1">$1850</h4>
-
-                        </div>
-                        <div class="d-flex flex-row align-items-center">
-                            <h6 class="mr-1">2TB</h6>
-                        </div>
-                        <div class="d-flex flex-row align-items-center">
-                            <h6 class="mr-1">925 NTD/TB</h6>
-                        </div>
-                        <div class="d-flex flex-column mt-4">
-                            <button class="btn btn-primary btn-sm" type="button">Details</button>
-                        </div>
-                    </div>
-                </div>
-
-
-
+    <div id="app">
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Pchome 硬碟篩選器</a>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
 
             </div>
+        </nav>
 
+        <div class="container mt-2">
+            <div class="row ">
+                <div class="col-3  border m-1">
+                    <div class="list-group p-1">
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1" type="checkbox" value="hdd-3.5" v-model="disktype">
+                            3.5英吋硬碟
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1" type="checkbox" value="hdd-2.5" v-model="disktype">
+                            2.5英吋硬碟
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1" type="checkbox" value="ssd-2.5" v-model="disktype">
+                            2.5英吋固態硬碟
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1" type="checkbox" value="ssd-gen3"  v-model="disktype">
+                            GEN3固態硬碟
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1" type="checkbox" value="ssd-gen4" v-model="disktype">
+                            GEN4固態硬碟
+                        </label>
+                    </div>
+
+
+                    <label  for="max-value" class="form-label">最大容量: {{maxvalue}} GB</label>
+                    <input type="range" class="form-range" v-bind:min="minvalue" max="25000" step="10" id="max-value" v-model="maxvalue">
+                    <label  for="min-value" class="form-label">最小容量: {{minvalue}} GB</label>
+                    <input type="range" class="form-range" min="120" v-bind:max="maxvalue" step="10" id="min-value" v-model="minvalue">
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+                <div class="col-8 m-1">
+                    <div class="row ">
+                        <img src=" https://placem.at/people?txt=價格空間xy圖&w=800&h=300" class="d-block w-100" alt="...">
+                    </div>
+
+                    <div class="row mt-2 mb-2">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary">按價格排序</button>
+                            <button type="button" class="btn btn-primary">按容量排序</button>
+                            <button type="button" class="btn btn-primary">按CP排序</button>
+                        </div>
+                    </div>
+
+                    <template v-for="item in renderdb" >
+                        <div class="row m-1 bg-white border rounded" >
+                            <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" v-bind:src="item.imgurl"></div>
+                            <div class="col-md-6 mt-1">
+                                <h5>{{item.name}}</h5>
+                                <p>{{item.content}}</p>
+                            </div>
+                            <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                                <div class="d-flex flex-row align-items-center">
+                                    <h4 class="mr-1">$ {{item.price}}</h4>
+
+                                </div>
+                                <div class="d-flex flex-row align-items-center">
+                                    <h6 class="mr-1">{{item.capacity}} GB</h6>
+                                </div>
+                                <div class="d-flex flex-row align-items-center">
+                                    <h6 class="mr-1">{{item.cpvalue}} NTD/TB</h6>
+                                </div>
+                                <div class="d-flex flex-column mt-4">
+                                    <form v-bind:action="item.url">
+                                        <button class="btn btn-primary btn-sm" type="submit" >Details</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+
+
+
+
+                </div>
+
+            </div>
         </div>
+        <h1>{{message}}</h1>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
     <script src="main.js"></script>
 </body>
 </html>
