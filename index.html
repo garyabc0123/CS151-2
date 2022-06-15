@@ -52,6 +52,51 @@
                     <input type="range" class="form-range" v-bind:min="minvalue" max="25000" step="10" id="max-value" v-model="maxvalue">
                     <label  for="min-value" class="form-label">最小容量: {{minvalue}} GB</label>
                     <input type="range" class="form-range" min="30" v-bind:max="maxvalue" step="10" id="min-value" v-model="minvalue">
+
+
+                    <label  for="max-value" class="form-label">最大價格: {{maxprice}} $</label>
+                    <input type="range" class="form-range" v-bind:min="minprice" max="100000" step="10" id="max-price" v-model="maxprice">
+                    <label  for="min-value" class="form-label">最小價格: {{minprice}} $</label>
+                    <input type="range" class="form-range" min="300" v-bind:max="maxprice" step="10" id="min-price" v-model="minprice">
+
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortType" id="obverseOrderCP" value="obverseOrderCP" v-model="sorttype" checked>
+                        <label class="form-check-label" for="obverseOrderCP">
+                            按CP正序
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortType" id="reverseOrderCP" value="reverseOrderCP" v-model="sorttype">
+                        <label class="form-check-label" for="reverseOrderCP">
+                            按CP倒序
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortType" id="obverseOrderPrice" value="obverseOrderPrice" v-model="sorttype">
+                        <label class="form-check-label" for="obverseOrderPrice">
+                            按價格正序
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortType" id="reverseOrderPrice" value="reverseOrderPrice" v-model="sorttype">
+                        <label class="form-check-label" for="reverseOrderPrice">
+                            按價格倒序
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortType" id="obverseOrderCap" value="obverseOrderCap" v-model="sorttype">
+                        <label class="form-check-label" for="obverseOrderCap">
+                            按容量正序
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortType" id="reverseOrderCap" value="reverseOrderCap" v-model="sorttype">
+                        <label class="form-check-label" for="reverseOrderCap">
+                            按容量倒序
+                        </label>
+                    </div>
+
                 </div>
 
 
@@ -66,16 +111,10 @@
 
                 <div class="col-8 m-1">
                     <div class="row ">
-                        <img src=" https://placem.at/people?txt=尚未完成價格空間xy圖&w=800&h=300" class="d-block w-100" alt="...">
+                        <img src=" https://placem.at/people?txt=尚未完成d3.js價格空間xy圖&w=800&h=300" class="d-block w-100" alt="...">
                     </div>
 
-                    <div class="row mt-2 mb-2">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary">按價格排序</button>
-                            <button type="button" class="btn btn-primary">按容量排序</button>
-                            <button type="button" class="btn btn-primary">按CP排序</button>
-                        </div>
-                    </div>
+
 
                     <template v-for="item in renderdb" >
                         <div class="row m-1 bg-white border rounded" >

@@ -15,6 +15,7 @@ const capacityNumberRegex = /[0-9.]+/;
 const capacityGigaMetricPrefixRegex = /[g|G]/;
 const capacityTeraMetricPrefixRegex = /[t|T]/;
 
+
 function getData(catalog){
     let url = corsproxyurl + "https%3A//ecshweb.pchome.com.tw/search/v3.3/all/category/" + catalog + "/results%3Fq%3D" + keyword + "%26page=" + 1 + "%26sort=sale/dc";
     console.log(url);
@@ -119,7 +120,6 @@ function getData(catalog){
 }
 
 function updateList(){
-    console.log(vm.disktype)
     vm.renderdb = diskdb.concat(ssddb).filter(function (value){
         if(value.capacity > vm.maxvalue){
             return false;
@@ -127,10 +127,33 @@ function updateList(){
         if(value.capacity < vm.minvalue){
             return false;
         }
+        if(value.price > vm.maxprice){
+            return false;
+        }
+        if(value.price < vm.minprice){
+            return false;
+        }
         for(let it = 0 ; it != vm.disktype.length ; it++){
             if(vm.disktype[it] == value.catalog){
                 return true;
             }
+        }
+    }).sort(function (a, b){
+        switch (vm.sorttype){
+            case "obverseOrderPrice":
+                return a.price - b.price;
+            case "obverseOrderCap":
+                return a.capacity - b.capacity;
+            case "obverseOrderCP":
+                return a.cpvalue - b.cpvalue;
+            case "reverseOrderPrice":
+                return b.price - a.price;
+            case "reverseOrderCap":
+                return b.capacity - a.capacity;
+            case "reverseOrderCP":
+                return b.cpvalue - a.cpvalue;
+            default:
+                return a.cpvalue - b.cpvalue;
         }
     })
 }
@@ -142,7 +165,10 @@ vm = Vue.createApp({
             renderdb: renderdb,
             maxvalue: maxvalue,
             minvalue: minvalue,
+            maxprice: 99999,
+            minprice: 300,
             disktype: [],
+            sorttype: "obverseOrderCP"
         }
     },
     created(){
@@ -155,7 +181,7 @@ vm = Vue.createApp({
     mounted(){
         updateList();
     },
-    computed:{
+    methods:{
 
     },
     watch:{
@@ -166,6 +192,15 @@ vm = Vue.createApp({
             updateList();
         },
         disktype: function (){
+            updateList();
+        },
+        sorttype: function (){
+            updateList();
+        },
+        minprice: function () {
+            updateList();
+        },
+        maxprice: function () {
             updateList();
         }
     },
